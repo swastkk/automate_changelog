@@ -33,7 +33,7 @@ def generate_changelog(categorized_commits):
     """
     changelog = ""
     for category, commits in categorized_commits.items():
-        changelog += f"{category}\n'------'"
+        changelog += f"{category}\n------\n------"
         for commit in commits:
             changelog += f"- {commit}\n"
         changelog += "\n"
