@@ -16,13 +16,13 @@ jobs:
         with: 
           ref: master  # Use 'main' branch instead of 'master'
 
-      - name: Prepend release notes to CHANGELOG.rst
+      - name: Prepend release notes to CHANGELOG.md
         run: |
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
             # Use Python script to prepend release notes
-            python3 -c "with open('CHANGELOG.rst', 'r+') as file:
+            python3 -c "with open('CHANGELOG.md', 'r+') as file:
                 changelog_content = file.read()
                 release_notes = \"\"\"${body}\"\"\"
                 release_version = \"${version}\"
@@ -30,7 +30,7 @@ jobs:
                 file.seek(0)
                 file.write(new_changelog_content)
             "
-            echo "Release notes for version $version prepended to CHANGELOG.rst."
+            echo "Release notes for version $version prepended to CHANGELOG.md."
           else
             echo "Error: Release notes body is empty."
             exit 1
