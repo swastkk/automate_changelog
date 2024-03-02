@@ -21,8 +21,19 @@ jobs:
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
-            # Prepend release notes using sed
-            sed -i "1i $version\n=====================================\n$body\n" CHANGELOG.rst
+            # Use Python script to prepend release notes
+            python3 - <<EOF
+with open('CHANGELOG.rst', 'r') as file:
+    changelog_content = file.read()
+
+release_notes = "${body}"
+release_version = "${version}"
+
+new_changelog_content = f"{release_version}\n=====================================\n{release_notes}\n\n{changelog_content}"
+
+with open('CHANGELOG.rst', 'w') as file:
+    file.write(new_changelog_content)
+EOF
             echo "Release notes for version $version prepended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
