@@ -21,8 +21,8 @@ jobs:
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
-            # Prepend release notes
-            echo -e "$version\n=====================================\n$body\n$(cat CHANGELOG.rst)" > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.rst
+            # Prepend release notes using sed
+            sed -i "1i $version\n=====================================\n$body\n" CHANGELOG.rst
             echo "Release notes for version $version prepended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
