@@ -1,3 +1,23 @@
+v0.4.3
+=====================================
+## Minor features[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#minor-features)
+1. [django.contrib.admin](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#module-django.contrib.admin)[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#django-contrib-admin)
+The new [AdminSite.get_log_entries()](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.AdminSite.get_log_entries) method allows customizing the queryset for the site’s listed log entries.
+The django.contrib.admin.AllValuesFieldListFilter, ChoicesFieldListFilter, RelatedFieldListFilter, and RelatedOnlyFieldListFilter admin filters now handle multi-valued query parameters.
+XRegExp is upgraded from version 3.2.0 to 5.1.1.
+The new [AdminSite.get_model_admin()](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.AdminSite.get_model_admin) method returns an admin class for the given model class.
+Properties in [ModelAdmin.list_display](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) now support boolean attribute.
+jQuery is upgraded from version 3.6.4 to 3.7.1.
+2. [django.contrib.auth](https://docs.djangoproject.com/en/5.0/topics/auth/#module-django.contrib.auth)[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#django-contrib-auth)
+The default iteration count for the PBKDF2 password hasher is increased from 600,000 to 720,000.
+The new asynchronous functions are now provided, using an a prefix: [django.contrib.auth.aauthenticate()](https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.aauthenticate), [aget_user()](https://docs.djangoproject.com/en/5.0/ref/contrib/auth/#django.contrib.auth.aget_user), [alogin()](https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.alogin), [alogout()](https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.alogout), and [aupdate_session_auth_hash()](https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.aupdate_session_auth_hash).
+AuthenticationMiddleware now adds an [HttpRequest.auser()](https://docs.djangoproject.com/en/5.0/ref/request-response/#django.http.HttpRequest.auser) asynchronous method that returns the currently logged-in user.
+The new [django.contrib.auth.hashers.acheck_password()](https://docs.djangoproject.com/en/5.0/topics/auth/passwords/#django.contrib.auth.hashers.acheck_password) asynchronous function and [AbstractBaseUser.acheck_password()](https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#django.contrib.auth.models.AbstractBaseUser.acheck_password) method allow asynchronous checking of user passwords.
+3. [django.contrib.contenttypes](https://docs.djangoproject.com/en/5.0/ref/contrib/contenttypes/#module-django.contrib.contenttypes)[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#django-contrib-contenttypes)
+[QuerySet.prefetch_related()](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#django.db.models.query.QuerySet.prefetch_related) now supports prefetching [GenericForeignKey](https://docs.djangoproject.com/en/5.0/ref/contrib/contenttypes/#django.contrib.contenttypes.fields.GenericForeignKey) with non-homogeneous set of results.
+
+**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.4.2...v0.4.3
+
 v0.4.2
 =====================================
 What’s new in Django 5.0[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#what-s-new-in-django-5-0)
