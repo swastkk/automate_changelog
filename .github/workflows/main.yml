@@ -14,45 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
-          ref: master
+          ref: master  # Use 'main' branch instead of 'master'
 
-      - name: Extract release information
-        id: extract_release_info
+      - name: Append release notes to CHANGELOG.rst
         run: |
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
-          echo "version=$version" >> $GITHUB_ENV
-          echo "$body" > release_notes_body.md
-          echo "::set-output name=body_file::release_notes_body.md"
-          
-      - name: Create Release Directory
-        run: mkdir -p release_notes
-        
-      - name: Read release notes file content
-        id: read_release_notes
-        run: |
-          body_file="${{ steps.extract_release_info.outputs.body_file }}"
-          if [ -s "$body_file" ]; then
-            body=$(cat "$body_file")
-            echo "::set-output name=body::$body"
-          else
-            echo "Error: Release notes body file is empty or does not exist."
-            exit 1
-          fi
-        
-      - name: Create release notes file
-        run: |
-          version="${{ env.version }}"
-          body="${{ steps.read_release_notes.outputs.body }}"
           if [ -n "$body" ]; then
-            printf "%s\n\n%s\n" "## $version" "$body" > "release_notes/$version.md"
-            echo "Release notes for version $version generated."
+            echo -e "\n$version\n=====================================\n$body\n" >> CHANGELOG.rst
+            echo "Release notes for version $version appended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
             exit 1
           fi
 
-      - name: Commit and push release notes file
+      - name: Commit and push release notes to repository
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Generate release notes for version ${{ env.version }}"
+          commit_message: "Add release notes for version ${{ github.event.release.tag_name }}"
