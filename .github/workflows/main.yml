@@ -16,7 +16,7 @@ jobs:
         id: extract_release_info
         run: |
           version="${{ github.event.release.tag_name }}"
-          body=$(echo "${{ github.event.release.body }}" | sed '1d')  # Remove the first line (Full Changelog)
+          body="${{ github.event.release.body }}"
           echo "version=$version" >> $GITHUB_ENV
           echo "body=$body" >> $GITHUB_ENV
           
