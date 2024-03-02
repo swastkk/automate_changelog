@@ -15,17 +15,17 @@ jobs:
       - name: Extract release information
         id: extract_release_info
         run: |
-          echo "::set-output name=version::${{ github.event.release.tag_name }}"
-          echo "::set-output name=body::${{ github.event.release.body }}"
+          echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          echo "body=${{ github.event.release.body }}" >> $GITHUB_ENV
 
       - name: Create release notes file
         run: |
-          version=${{ steps.extract_release_info.outputs.version }}
-          body=${{ steps.extract_release_info.outputs.body }}
+          version="${{ env.version }}"
+          body="${{ env.body }}"
           echo "$body" > "Release_Notes_$version.md"
           echo "Release notes for version $version generated."
 
       - name: Commit and push release notes file
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Generate release notes for version ${{ steps.extract_release_info.outputs.version }}"
+          commit_message: "Generate release notes for version ${{ env.version }}"
