@@ -14,15 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
-          ref: master  # Use 'main' branch instead of 'master'
+          ref: main  # Use 'main' branch instead of 'master'
 
-      - name: Append release notes to CHANGELOG.rst
+      - name: Prepend release notes to CHANGELOG.rst
         run: |
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
-            echo -e "\n$version\n=====================================\n$body\n" >> CHANGELOG.rst
-            echo "Release notes for version $version appended to CHANGELOG.rst."
+            # Prepend release notes
+            echo -e "$version\n=====================================\n$body\n\n$(cat CHANGELOG.rst)" > temp && mv temp CHANGELOG.rst
+            echo "Release notes for version $version prepended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
             exit 1
