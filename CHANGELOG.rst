@@ -1,3 +1,13 @@
+v0.3.9
+=====================================
+Deploy to develop pipeline https://github.com/nexB/scancode.io/issues/659 by @tdruez in https://github.com/nexB/scancode.io/pull/666
+Add attribution generation as a new downloadable output https://github.com/nexB/scancode.io/issues/684 by @tdruez in https://github.com/nexB/scancode.io/pull/712
+Add pathmap pipes module for path matching using Aho-Corasick https://github.com/nexB/scancode.io/issues/711 by @tdruez in https://github.com/nexB/scancode.io/pull/713
+Improve performances of map_jar_to_source pipe https://github.com/nexB/scancode.io/issues/711 by @tdruez in https://github.com/nexB/scancode.io/pull/723
+File viewer search and full screen by @tdruez in https://github.com/nexB/scancode.io/pull/725
+
+**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.3.7...v0.3.9
+
 v0.3.0
 =====================================
 - Rename multiple pipelines for consistency and precision:
