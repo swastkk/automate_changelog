@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
-          ref: master  # Use 'main' branch instead of 'master'
+          ref: master
 
       - name: Prepend release notes to CHANGELOG.rst
         run: |
@@ -22,7 +22,7 @@ jobs:
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
             # Prepend release notes
-            echo -e "$version\n=====================================\n$body\n\n$(cat CHANGELOG.rst)" > temp && mv temp CHANGELOG.rst
+            printf "%s\n=====================================\n%s\n\n$(cat CHANGELOG.rst)" "$version" "$body" > temp && mv temp CHANGELOG.rst
             echo "Release notes for version $version prepended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
