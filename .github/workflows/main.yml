@@ -17,12 +17,15 @@ jobs:
         run: |
           echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
           echo "body=${{ github.event.release.body }}" >> $GITHUB_ENV
-
+      - name: Create Release Directory
+        run: mkdir -p release_notes
+        
       - name: Create release notes file
         run: |
           version="${{ env.version }}"
           body="${{ env.body }}"
-          echo "$body" > "Release_Notes_$version.md"
+          touch "release_notes/$version.md"
+          echo "$body" > "release_notes/$version.md"
           echo "Release notes for version $version generated."
 
       - name: Commit and push release notes file
