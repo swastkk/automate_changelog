@@ -15,8 +15,11 @@ jobs:
       - name: Extract release information
         id: extract_release_info
         run: |
-          echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-          echo "body=${{ github.event.release.body }}" >> $GITHUB_ENV
+          version="${{ github.event.release.tag_name }}"
+          body=$(echo "${{ github.event.release.body }}" | sed '1d')  # Remove the first line (Full Changelog)
+          echo "version=$version" >> $GITHUB_ENV
+          echo "body=$body" >> $GITHUB_ENV
+          
       - name: Create Release Directory
         run: mkdir -p release_notes
         
