@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
-          ref: master  # Use 'main' branch instead of 'master'
+          ref: main  # Use 'main' branch instead of 'master'
 
       - name: Prepend release notes to CHANGELOG.rst
         run: |
@@ -22,18 +22,14 @@ jobs:
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
             # Use Python script to prepend release notes
-            python3 - <<EOF
-with open('CHANGELOG.rst', 'r') as file:
-    changelog_content = file.read()
-
-release_notes = "${body}"
-release_version = "${version}"
-
-new_changelog_content = f"{release_version}\n=====================================\n{release_notes}\n\n{changelog_content}"
-
-with open('CHANGELOG.rst', 'w') as file:
-    file.write(new_changelog_content)
-EOF
+            python3 -c "with open('CHANGELOG.rst', 'r+') as file:
+                changelog_content = file.read()
+                release_notes = \"\"\"${body}\"\"\"
+                release_version = \"${version}\"
+                new_changelog_content = f\"{release_version}\\n=====================================\n{release_notes}\\n\\n{changelog_content}\"
+                file.seek(0)
+                file.write(new_changelog_content)
+            "
             echo "Release notes for version $version prepended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
