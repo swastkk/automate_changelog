@@ -1,3 +1,25 @@
+v0.4.1
+=====================================
+Added the Action Example
+-----------------------------
+
+The goal of this Action is to be the Action for committing files for the 80% use case. Therefore, you might run into issues if your Workflow falls into the not supported 20% portion.
+
+The following is a list of edge cases the Action knowingly does not support:
+
+No git pull when the repository is out of date with remote. The Action will not do a git pull before doing the git push. You are responsible for keeping the repository up to date in your Workflow runs.
+
+No support for running the Action in build matrices. If your Workflow is using build matrices, and you want that each job commits and pushes files to the remote, you will run into the issue, that the repository in the workflow will become out of date. As the Action will not do a git pull for you, you have to do that yourself.
+
+No support for git rebase or git merge. There are many strategies on how to integrate remote upstream changes to a local repository. git-auto-commit does not want to be responsible for doing that.
+
+No support for detecting line break changes between CR (Carriage Return) and LF (Line Feed). This is a low level issue, you have to resolve differently in your project. Sorry.
+
+If this Action doesn't work for your workflow, check out [EndBug/add-and-commit](https://github.com/EndBug/add-and-commit).
+
+**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.4.0...v0.4.1
+
+
 v0.4.0
 =====================================
 Tagging suggestions
