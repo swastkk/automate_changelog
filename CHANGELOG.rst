@@ -1,17 +1,3 @@
-Bug Fixes
-------
-------- fix: this test
-- fix: this test
-- fix: this test
-
-Other
-------
-------- fix Testing
-- BugFix: sjklsdlkjd
-- Add the Script
-- Add Changelog file+Empty script file
-
-
 v0.3.0
 =====================================
 - Rename multiple pipelines for consistency and precision:
