@@ -20,9 +20,10 @@ jobs:
         id: extract_release_info
         run: |
           version="${{ github.event.release.tag_name }}"
+          body="${{ github.event.release.body }}"
           echo "version=$version" >> $GITHUB_ENV
-          echo "${{ github.event.release.body }}" > release_notes_body.txt
-          echo "::set-output name=body_file::release_notes_body.txt"
+          echo "$body" > release_notes_body.md
+          echo "::set-output name=body_file::release_notes_body.md"
           
       - name: Create Release Directory
         run: mkdir -p release_notes
