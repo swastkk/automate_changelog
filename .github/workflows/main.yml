@@ -14,23 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
-          ref: master 
+          ref: master
 
       - name: Extract release information
         id: extract_release_info
         run: |
           version="${{ github.event.release.tag_name }}"
-          body="${{ github.event.release.body }}"
           echo "version=$version" >> $GITHUB_ENV
-          echo "body=$body" >> $GITHUB_ENV
+          echo "${{ github.event.release.body }}" > release_notes_body.txt
+          echo "::set-output name=body_file::release_notes_body.txt"
           
       - name: Create Release Directory
         run: mkdir -p release_notes
         
+      - name: Read release notes file content
+        id: read_release_notes
+        run: echo "::set-output name=body::$(cat ${{ steps.extract_release_info.outputs.body_file }})"
+        
       - name: Create release notes file
         run: |
           version="${{ env.version }}"
-          body="${{ env.body }}"
+          body="${{ steps.read_release_notes.outputs.body }}"
           touch "release_notes/$version.md"
           echo "$body" > "release_notes/$version.md"
           echo "Release notes for version $version generated."
