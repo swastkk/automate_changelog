@@ -1,3 +1,13 @@
+v0.4.2
+=====================================
+What’s new in Django 5.0[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#what-s-new-in-django-5-0)
+---------------
+
+Facet filters in the admin[¶](https://docs.djangoproject.com/en/5.0/releases/5.0/#facet-filters-in-the-admin)
+Facet counts are now shown for applied filters in the admin changelist when toggled on via the UI. This behavior can be changed via the new [ModelAdmin.show_facets](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.show_facets) attribute. For more information see [Facets](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/filters/#facet-filters).
+
+**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.4.1...v0.4.2
+
 CHANGELOG
 ==========
 
