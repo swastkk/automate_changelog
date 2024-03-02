@@ -16,14 +16,13 @@ jobs:
         with: 
           ref: master  # Use 'main' branch instead of 'master'
 
-      - name: Prepend release notes to CHANGELOG.rst
+      - name: Append release notes to CHANGELOG.rst
         run: |
           version="${{ github.event.release.tag_name }}"
           body="${{ github.event.release.body }}"
           if [ -n "$body" ]; then
-            # Prepend release notes
-            echo -e "$version\n=====================================\n$body\n" | cat - CHANGELOG.rst > temp && mv temp CHANGELOG.rst
-            echo "Release notes for version $version prepended to CHANGELOG.rst."
+            echo -e "\n$version\n=====================================\n$body\n" >> CHANGELOG.rst
+            echo "Release notes for version $version appended to CHANGELOG.rst."
           else
             echo "Error: Release notes body is empty."
             exit 1
