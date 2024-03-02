@@ -12,5 +12,5 @@ A data migration is included to facilitate the migration of existing data. Only 
 - Improve the inspect_manifest pipeline to accept archives as inputs. [Issue #1034](https://github.com/nexB/scancode.io/issues/1034)
 - Add support for tagging download URL inputs using the # section of URLs. 
   This feature is particularly useful in the map_develop_to_deploy pipeline when download URLs are utilized as inputs. Tags such as from and to can be specified by adding #from or #to fragments at the end of the download URLs. Using the CLI, the uploaded files can be tagged using the filename:tag syntax while using the --input-file arguments. In the UI, tags can be edited from the Project details view Inputs panel. On the REST API, a new upload_file_tag field is available to use along the upload_file. [Issue #708](https://github.com/nexB/scancode.io/issues/708)
-  
-**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.2.4...v0.2.5
+
+**Full Changelog**: https://github.com/swastkk/automate_changelog/compare/v0.2.5...v0.2.6
