@@ -1,0 +1,22 @@
+name: Download and Display Repository Files
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to match your branch
+
+jobs:
+  download-and-display:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Repository ZIP
+        uses: actions/download-artifact@v2
+        with:
+          name: repo-zip
+
+      - name: Unzip Repository
+        run: unzip -q repo.zip -d repo
+
+      - name: Display Repository Structure
+        run: ls -R repo
+
