@@ -9,13 +9,8 @@ jobs:
   download-repo-archive:
     runs-on: ubuntu-latest
     steps:
-      - name: Download Repository Archive
-        run: |
-          # Download the ZIP archive of the repository from the archive URL
-          curl -sLO "https://github.com/${{ github.repository }}/archive/master.zip"
-
-      - name: Unzip Repository Archive
-        run: unzip -q main.zip -d repo
-
-      - name: Display Repository Structure
-        run: ls -R repo
+    - uses: actions/download-artifact@v4
+      with:
+        name: my-artifact
+    - name: Display structure of downloaded files
+      run: ls -R
