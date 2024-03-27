@@ -1,22 +1,21 @@
-name: Download and Display Repository Files
+name: Download Repository Archive
 
 on:
   push:
     branches:
-      - master  # Adjust this to match your branch
+      - main  # Adjust this to match your branch
 
 jobs:
-  download-and-display:
+  download-repo-archive:
     runs-on: ubuntu-latest
     steps:
-      - name: Download Repository ZIP
-        uses: actions/download-artifact@v2
-        with:
-          name: repo-zip
+      - name: Download Repository Archive
+        run: |
+          # Download the ZIP archive of the repository from the archive URL
+          curl -sLO "https://github.com/${{ github.repository }}/archive/master.zip"
 
-      - name: Unzip Repository
-        run: unzip -q repo.zip -d repo
+      - name: Unzip Repository Archive
+        run: unzip -q main.zip -d repo
 
       - name: Display Repository Structure
         run: ls -R repo
-
