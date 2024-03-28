@@ -1,25 +1,37 @@
-name: Download Repository Archive
+name: Scan Repository with ScanCode.io
 
 on:
   push:
     branches:
-      - master  # Adjust this to match your branch
+      - master
 
 jobs:
   download-repo-archive:
     runs-on: ubuntu-latest
     steps:
       - name: Download Repository Archive
-        run: |
-          # Create a temporary directory
-          mkdir -p temp
-          # Download the ZIP archive of the repository from the archive URL
-          curl -sLO "https://github.com/${GITHUB_REPOSITORY}/archive/${GITHUB_SHA}.zip"
-          # Move the downloaded archive to the temp directory
-          mv ${GITHUB_SHA}.zip temp/repository-archive.zip
-
-      - name: Upload Repository Archive
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Ensure the entire history is fetched
+      - name: Create Artifact
         uses: actions/upload-artifact@v2
         with:
           name: repository-archive
-          path: "temp/"
+          path: .
+
+  scan-repository:
+    runs-on: ubuntu-22.04
+    needs: download-repo-archive
+    steps:
+      - name: Download Repository Archive
+        uses: actions/download-artifact@v2
+        with:
+          name: repository-archive
+          path: temp
+
+      - name: Run ScanCode.io pipeline
+        uses: nexB/scancode-action@alpha
+        with:
+          pipelines: "scan_codebase"
+          input-urls: "temp/repository-archive.zip"
+          # Other inputs as needed
