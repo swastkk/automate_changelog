@@ -19,7 +19,7 @@ jobs:
           name: repository-archive
           path: .
 
-  scan_codebase:
+  scan-repository:
     runs-on: ubuntu-22.04
     needs: download-repo-archive
     steps:
@@ -29,7 +29,7 @@ jobs:
           name: repository-archive
           path: .
 
-      - name: Run ScanCode.io pipeline
+      - name: Run ScanCode.io pipeline for repository
         uses: nexB/scancode-action@alpha
         with:
           pipelines: "scan_codebase"
@@ -51,7 +51,7 @@ jobs:
           # Placeholder command for vulnerability scanning
           echo "Running vulnerability scan..."
 
-  scan_single_package:
+  scan-single-package:
     runs-on: ubuntu-22.04
     needs: download-repo-archive
     steps:
@@ -70,7 +70,7 @@ jobs:
 
   generate-sboms:
     runs-on: ubuntu-22.04
-    needs: [scan_codebase, scan_single_package]
+    needs: [scan-repository, scan-single-package]
     steps:
       - name: Download Repository Archive
         uses: actions/download-artifact@v2
