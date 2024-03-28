@@ -1,13 +1,21 @@
-on: [push]
+name: Download Repository Archive
+
+on:
+  push:
+    branches:
+      - master  # Adjust this to match your branch
 
 jobs:
-  scan-codebase:
-    runs-on: ubuntu-22.04
-    name: Scan codebase with ScanCode.io
+  download-repo-archive:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Download Repository Archive
+        run: |
+          # Download the ZIP archive of the repository from the archive URL
+          curl -sLO "https://github.com/${GITHUB_REPOSITORY}/archive/${GITHUB_SHA}.zip"
+
+      - name: Upload Repository Archive
+        uses: actions/upload-artifact@v2
         with:
-          path: scancode-inputs
-      - uses: nexB/scancode-action@alpha
-        with:
-          pipelines: "scan_codebase"
+          name: repository-archive
+          path: "${{ github.workspace }}/${GITHUB_REPOSITORY}-${GITHUB_SHA}.zip"
