@@ -11,11 +11,18 @@ jobs:
     steps:
       - name: Download Repository Archive
         run: |
+          # Create a temporary directory
+          mkdir -p temp
           # Download the ZIP archive of the repository from the archive URL
           curl -sLO "https://github.com/${GITHUB_REPOSITORY}/archive/${GITHUB_SHA}.zip"
+          # Move the downloaded archive to the temp directory
+          mv ${GITHUB_SHA}.zip temp/repository-archive.zip
+
+      - name: List files in temp directory
+        run: ls temp
 
       - name: Upload Repository Archive
         uses: actions/upload-artifact@v2
         with:
           name: repository-archive
-          path: "${{ github.workspace }}/${GITHUB_REPOSITORY}-${GITHUB_SHA}.zip"
+          path: temp/repository-archive.zip
