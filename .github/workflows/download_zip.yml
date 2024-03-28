@@ -38,7 +38,7 @@ jobs:
 
   find-vulnerabilities:
     runs-on: ubuntu-22.04
-    needs: download-repo-archive
+    needs: scan-repository
     steps:
       - name: Download Repository Archive
         uses: actions/download-artifact@v2
@@ -70,7 +70,7 @@ jobs:
 
   generate-sboms:
     runs-on: ubuntu-22.04
-    needs: [scan-repository, scan-single-package]
+    needs: [scan-repository, find-vulnerabilities, scan-single-package]
     steps:
       - name: Download Repository Archive
         uses: actions/download-artifact@v2
