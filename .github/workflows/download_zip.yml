@@ -27,11 +27,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: repository-archive
-          path: temp
+          path: .
 
       - name: Run ScanCode.io pipeline
         uses: nexB/scancode-action@alpha
         with:
           pipelines: "scan_codebase"
-          input-urls: "temp/repository-archive.zip"
+          input-urls: "repository-archive.zip"
           # Other inputs as needed
