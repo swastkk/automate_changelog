@@ -19,7 +19,7 @@ jobs:
           name: repository-archive
           path: .
 
-  scan-repository:
+  scan_codebase:
     runs-on: ubuntu-22.04
     needs: download-repo-archive
     steps:
@@ -38,7 +38,7 @@ jobs:
 
   find-vulnerabilities:
     runs-on: ubuntu-22.04
-    needs: scan-repository
+    needs: scan_codebase
     steps:
       - name: Download Repository Archive
         uses: actions/download-artifact@v2
@@ -51,7 +51,7 @@ jobs:
           # Placeholder command for vulnerability scanning
           echo "Running vulnerability scan..."
 
-  scan-single-package:
+  scan_single_package:
     runs-on: ubuntu-22.04
     needs: download-repo-archive
     steps:
@@ -70,7 +70,7 @@ jobs:
 
   generate-sboms:
     runs-on: ubuntu-22.04
-    needs: [scan-repository, find-vulnerabilities, scan-single-package]
+    needs: [scan_codebase, find-vulnerabilities, scan_single_package]
     steps:
       - name: Download Repository Archive
         uses: actions/download-artifact@v2
