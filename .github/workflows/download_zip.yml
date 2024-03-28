@@ -13,9 +13,10 @@ jobs:
         run: |
           # Create a temporary directory
           mkdir -p temp
-          cd temp
           # Download the ZIP archive of the repository from the archive URL
           curl -sLO "https://github.com/${GITHUB_REPOSITORY}/archive/${GITHUB_SHA}.zip"
+          # Move the downloaded archive to the temp directory
+          mv ${GITHUB_SHA}.zip temp/repository-archive.zip
 
       - name: Upload Repository Archive
         uses: actions/upload-artifact@v2
