@@ -1,4 +1,4 @@
-name: Scan Repository with ScanCode.io
+name: ScanCode action
 
 on:
   push:
@@ -35,3 +35,35 @@ jobs:
           pipelines: "scan_codebase"
           input-urls: "repository-archive.zip"
           # Other inputs as needed
+
+  scan-single-package:
+    runs-on: ubuntu-22.04
+    needs: download-repo-archive
+    steps:
+      - name: Download Repository Archive
+        uses: actions/download-artifact@v2
+        with:
+          name: repository-archive
+          path: .
+
+      - name: Run ScanCode.io single package pipeline
+        uses: nexB/scancode-action@alpha
+        with:
+          pipelines: "scan_single_package"
+          input-urls: "repository-archive.zip"
+          # Other inputs as needed
+
+  generate-sboms:
+    runs-on: ubuntu-22.04
+    needs: [scan-repository, scan-single-package]
+    steps:
+      - name: Download Repository Archive
+        uses: actions/download-artifact@v2
+        with:
+          name: repository-archive
+          path: .
+
+      - name: Run SBOMs generation
+        run: |
+          # Implement SBOMs generation logic here
+          echo "SBOMs generation logic here"
