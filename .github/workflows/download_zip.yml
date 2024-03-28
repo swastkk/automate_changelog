@@ -9,8 +9,13 @@ jobs:
   download-repo-archive:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v4
-      with:
-        name: my-artifact
-    - name: Display structure of downloaded files
-      run: ls -R
+      - name: Download Repository Archive
+        run: |
+          # Download the ZIP archive of the repository from the archive URL
+          curl -sLO "https://github.com/${GITHUB_REPOSITORY}/archive/${GITHUB_REF}.zip"
+
+      - name: Upload Repository Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: repository-archive
+          path: ${{ github.workspace }}/${GITHUB_REPOSITORY}-${GITHUB_SHA}.zip
